@@ -2,35 +2,38 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>Vanilla JavaScript App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Vanilla JavaScript App</title>
 </head>
 
 <body>
-  <main>
-  <h1>Vanilla JavaScript App</h1>
-  <p>Loading content from the API: <b id="name">...</b></p>
-  </main>
+    <main>
+        <h1>Vanilla JavaScript App</h1>
+        <div id="student-details"></div>
+    </main>
 
-  <script>
-    (async function() {
-    const student = await (await fetch(`/api/message`)).json();
-    const studentDetailsElement = document.querySelector('#student-details');
+    <script>
+        (async function() {
+            const response = await fetch(`/api/message`);
+            const student = await response.json();
+            const studentDetailsElement = document.querySelector('#student-details');
 
-    // Clear existing content
-    studentDetailsElement.innerHTML = '';
+            // Create a list element
+            const listElement = document.createElement('ul');
 
-    // Loop through student properties and display them
-    for (const prop in student) {
-        const propertyElement = document.createElement('p');
-        propertyElement.textContent = `${prop}: ${student[prop]}`;
-        studentDetailsElement.appendChild(propertyElement);
-    }
-    }());
+            // Loop through student properties and create list items
+            for (const prop in student) {
+                const listItemElement = document.createElement('li');
+                listItemElement.textContent = `${prop}: ${student[prop]}`;
+                listElement.appendChild(listItemElement);
+            }
 
-  </script>  
+            // Append the list to the student details element
+            studentDetailsElement.appendChild(listElement);
+        })();
+    </script>
 </body>
 
 </html>
