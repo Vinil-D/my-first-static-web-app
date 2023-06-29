@@ -16,9 +16,20 @@
 
   <script>
     (async function() {
-        const { student } = await( await fetch(`/api/message`)).json();
-        document.querySelector('#name').textContent = student.name;
-  }());
+    const student = await (await fetch(`/api/message`)).json();
+    const studentDetailsElement = document.querySelector('#student-details');
+
+    // Clear existing content
+    studentDetailsElement.innerHTML = '';
+
+    // Loop through student properties and display them
+    for (const prop in student) {
+        const propertyElement = document.createElement('p');
+        propertyElement.textContent = `${prop}: ${student[prop]}`;
+        studentDetailsElement.appendChild(propertyElement);
+    }
+    }());
+
   </script>  
 </body>
 
